@@ -43,15 +43,16 @@ body {
   text-align: center;
 }
 
-  .banner {
-    display: block;
-    width: 100%;
-    max-width: 26rem;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-  }
+.banner {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 20vh;
+  margin: 0 auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
 
 .site-title {
   margin: 1.25rem 0 0.1rem;
