@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Outreach Review v13 Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,500;1,400&display=swap">
+<style>
+/* Layout: replica of the bym-rsf.org Firespring "np_retreat" interior template (hamburger header,
+   white masthead with breadcrumb + serif title + squiggle, grey content field, grey footer).
+   Single light theme on purpose: production has no dark mode. */
+:root {
+  color-scheme: light;
+  --ink: #0c1005;          /* body text */
+  --ink-2: #272727;        /* footer text */
+  --green: #286d27;        /* links, headings */
+  --green-dk: #155a15;     /* donate bar, squiggle */
+  --field: #f1f1f1;        /* content + footer ground */
+  --paper: #ffffff;
+  --rule: #e4e1dc;
+  --panel: #0c1005;        /* slide-out menu */
+  --hl: #fff3c4;           /* review highlight */
+  --hl-ink: #6b4a00;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --logo: "EB Garamond", Garamond, Georgia, serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 20px/28px var(--sans); }
+a { color: var(--green); text-decoration: underline 2px transparent; text-underline-offset: 3px; transition: text-decoration-color .2s; }
+a:hover, a:focus-visible { text-decoration-color: currentColor; }
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+img { max-width: 100%; height: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.skip-to-main { position: absolute; left: -9999px; top: 0; background: var(--paper); padding: 8px 12px; z-index: 10000; }
+.skip-to-main:focus { left: 8px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+
+/* ---------- Header ---------- */
+.top-header { display: flex; justify-content: flex-end; font-size: 16px; line-height: 22.4px; }
+.top-header--left { flex: 1 1 auto; display: flex; align-items: center; border-bottom: 1px solid var(--rule); min-width: 0; }
+.th-social { padding: 0 16px; display: flex; }
+.th-social a { display: flex; align-items: center; justify-content: center; padding: 12px; margin-left: -12px; color: var(--green); }
+.th-social svg { width: 16px; height: 24px; fill: currentColor; }
+.alert-container { padding: 0 40px; min-width: 0; }
+.alert-container p { margin: 0; }
+.donate-block { flex: 0 0 auto; }
+.donate-block .button { display: flex; align-items: center; justify-content: center; height: 51px; padding: 0 50px;
+  background: var(--green-dk); color: #fff; border: 1px solid var(--green-dk); font-size: 16px; line-height: 16px; text-decoration: none; white-space: nowrap; }
+.donate-block .button:hover { background: var(--green); }
+.donate-block .button svg { width: 16px; height: 16px; fill: currentColor; margin-right: 7.5px; }
+.bottom-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; }
+.nav-logo a { display: inline-block; text-decoration: none; }
+.nav-logo img { display: block; width: 400px; height: auto; }
+.logo-text { display: none; text-align: center; color: var(--green-dk); line-height: 1; }
+.logo-text b { display: block; font: 500 36px/1 var(--logo); letter-spacing: -.2px; }
+.logo-text i { display: block; font: italic 400 13px/1.4 var(--logo); color: var(--ink); margin-top: 4px; }
+.nav-logo.no-img img { display: none; }
+.nav-logo.no-img .logo-text { display: block; }
+.mobile-menu-toggle { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: 0; padding: 0; }
+.mobile-menu-toggle svg { width: 38.1px; height: 24px; overflow: visible; }
+.mobile-menu-toggle .st0 { fill: var(--green); }
+.mobile-menu-toggle .st1 { fill: var(--ink); }
+
+/* ---------- Masthead ---------- */
+.masthead-container { padding: 60px 0; border-bottom: 1px solid var(--rule); position: relative; }
+.nav--breadcrumbs ul { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-wrap: wrap; align-items: center; max-width: 80%;
+  font: 600 16px/22.4px var(--sans); text-transform: uppercase; letter-spacing: 2px; }
+.nav--breadcrumbs li { display: flex; align-items: center; }
+.nav--breadcrumbs li + li::before { content: "\203A"; color: var(--ink); margin: 0 8px 0 8px; letter-spacing: 0; font-weight: 400; }
+.nav--breadcrumbs .home svg { width: 18px; height: 16px; fill: var(--ink); display: block; }
+.page-title { font: 600 72px/72px var(--serif); color: #000; margin: 0 0 20px; max-width: 80%; text-wrap: balance; }
+.wave { margin-top: 25px; width: 104.7px; height: 28px; display: flex; align-items: center; }
+.wave svg { width: 104.7px; height: 7px; display: block; }
+
+/* ---------- Content ---------- */
+main { background: var(--field); }
+main .wrap { padding: 60px 40px; }
+.primary-container h1 { font: 600 72px/72px var(--serif); color: var(--green); margin: 0 0 55px; text-align: center; text-wrap: balance; }
+.primary-container p { font-size: 20px; line-height: 30px; margin: 0 0 25px; }
+.primary-container ul { margin: 0 0 0 60px; padding: 0; list-style: disc; }
+.primary-container > ul { margin: 0 0 30px 60px; }
+.primary-container u { text-decoration: underline; }
+
+.primary-container h2 { font: 600 40px/48px var(--serif); color: var(--green); margin: 50px 0 20px; text-wrap: balance; }
+.primary-container h1 + p, .primary-container h2:first-child { margin-top: 0; }
+
+/* ---------- Footer ---------- */
+footer { color: var(--ink-2); }
+.row--top { background: var(--field); padding: 50px 0 10px; font-size: 18px; line-height: 25.2px; }
+.row--top .fwrap { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 240px minmax(0,1fr) 300px; align-items: center; gap: 0; }
+.f-social { display: flex; justify-content: center; }
+.f-social a { color: var(--ink-2); display: flex; }
+.f-social svg { width: 16px; height: 30px; fill: currentColor; }
+.footer-links { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; }
+.footer-links li { margin: 0 20px; text-align: center; }
+.footer-links a, .row--top a, .row--middle a { color: var(--ink-2); }
+.f-phone { text-align: right; }
+.f-phone b { font-weight: 900; margin-right: 6px; }
+.row--middle { background: var(--field); padding: 30px 0 40px; text-align: center; font-size: 16px; line-height: 25.6px; }
+.location { width: 200px; margin: 0 auto; }
+.location h5 { font: 400 18px/27px var(--sans); color: var(--green); margin: 0 0 5px; }
+.location .label { font-weight: 900; margin-right: 6px; }
+.location__phone { margin: 0 0 0; }
+.row--bottom { padding: 30px 0; text-align: center; font-size: 16px; line-height: 22.4px; color: var(--ink); background: var(--paper); }
+.row--bottom .bwrap { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; padding: 0 20px; }
+.row--bottom .copy, .row--bottom .powered { padding: 5px 10px; }
+.policy-links { display: flex; padding: 0 10px; }
+.policy-link a { color: var(--ink); display: inline-block; padding: 5px 0 4px; margin: 0 10px; position: relative; }
+.policy-link a::after { content: ""; display: block; height: 9px; margin-top: -2px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 102 9' preserveAspectRatio='none'><path d='M0 4.5 Q6.4 1.5 12.75 4.5 T25.5 4.5 T38.25 4.5 T51 4.5 T63.75 4.5 T76.5 4.5 T89.25 4.5 T102 4.5' fill='none' stroke='%23286d27' stroke-width='2'/></svg>") left center / 100% 100% no-repeat;
+  opacity: 0; transition: opacity .2s; }
+.policy-link a:hover::after { opacity: 1; }
+.powered a { color: var(--ink); }
+
+/* ---------- Slide-out menu (production uses this at every width) ---------- */
+.mobile-container { position: fixed; top: 0; right: 0; height: 100%; width: 640px; max-width: 100%; background: var(--panel); color: #fff;
+  z-index: 9992; transform: translateX(100%); transition: transform .4s cubic-bezier(.165,.84,.44,1); display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top,0px) 0 calc(40px + env(safe-area-inset-bottom,0px)); visibility: hidden; }
+body.mobile-menu-visible .mobile-container { transform: none; visibility: visible; }
+.mobile-overlay { position: fixed; inset: 0; background: rgba(12,16,5,.45); z-index: 9991; opacity: 0; pointer-events: none; transition: opacity .3s; }
+body.mobile-menu-visible .mobile-overlay { opacity: 1; pointer-events: auto; }
+.mobile-menu-wrap { flex: 1 1 auto; overflow-y: auto; }
+.mnav, .mnav ul { list-style: none; margin: 0; padding: 0; }
+.mnav li { position: relative; }
+.mnav a { display: block; color: #fff; text-decoration: none; }
+.mnav a:hover { text-decoration: underline 2px; }
+.mnav > li > a { font: 600 26px/36.4px var(--serif); padding: 15px 70px 15px 20px; }
+.mnav ul { display: none; margin: 0 0 10px; }
+.mnav li.open > ul { display: block; }
+.mnav ul a { font: 400 16px/22.4px var(--sans); padding: 5px 50px 5px 40px; }
+.mnav ul ul a { padding-left: 60px; font-size: 15px; }
+.mnav ul ul ul a { padding-left: 80px; }
+.mnav ul ul ul ul a { padding-left: 100px; }
+.mnav li.here > a { text-decoration: underline 2px; text-underline-offset: 4px; }
+.acc { position: absolute; top: 0; right: 0; width: 50px; height: 66.4px; background: none; border: 0; cursor: pointer; padding: 0; }
+.mnav ul .acc { height: 32.4px; }
+.acc::before, .acc::after { content: ""; position: absolute; left: 50%; top: 50%; background: #fff; transform: translate(-50%,-50%); }
+.acc::before { width: 2px; height: 14px; }
+.acc::after { width: 14px; height: 2px; }
+.mnav ul .acc::before { height: 10px; } .mnav ul .acc::after { width: 10px; }
+li.open > .acc::before { display: none; }
+.mobile-footer { display: flex; align-items: stretch; height: 50px; margin-top: 10px; }
+.mobile-footer input { flex: 1 1 auto; min-width: 0; border: 0; padding: 0 20px; font: 400 18px var(--sans); background: #fff; color: var(--ink); }
+.mobile-footer .close { width: 75px; flex: 0 0 75px; display: flex; align-items: center; justify-content: center; background: var(--panel); border: 0; cursor: pointer; }
+.mobile-footer .close svg { width: 15px; height: 20px; fill: #fff; }
+
+/* ---------- Review bar (not part of the production page) ---------- */
+.review-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000; background: #fffbe6; border-top: 2px solid #c9a227;
+  font: 400 14px/1.4 var(--sans); color: #3b2f00; padding: 8px 16px calc(8px + env(safe-area-inset-bottom,0px)); display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.review-bar strong { font-weight: 700; }
+.review-bar .msg { flex: 1 1 320px; min-width: 0; }
+.review-bar label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+.review-bar a { color: #3b2f00; text-decoration: underline; }
+.review-bar button { font: 600 13px var(--sans); background: none; border: 1px solid #c9a227; color: #3b2f00; border-radius: 4px; padding: 4px 10px; cursor: pointer; }
+body.review-bar-on { padding-bottom: 64px; }
+.rowtag { display: none; }
+body.show-changes .primary-container a.chg { background: var(--hl); color: var(--hl-ink); box-shadow: 0 0 0 2px var(--hl); border-radius: 2px; text-decoration-color: currentColor; }
+body.show-changes .rowtag { display: inline-block; font: 600 12px/1 var(--sans); color: var(--hl-ink); border: 1px solid currentColor;
+  border-radius: 3px; padding: 2px 4px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+
+/* ---------- Narrow screens (matches production's phone layout) ---------- */
+@media (max-width: 1100px) {
+  .row--top .fwrap { grid-template-columns: 1fr; gap: 0; text-align: center; padding: 0 20px; }
+  .f-social { margin: 0 0 20px; }
+  .footer-links { display: block; margin: 0 0 30px; }
+  .footer-links li { margin: 10px 0; }
+  .f-phone { text-align: center; margin: 0 0 20px; font-size: 16px; }
+  .f-phone b { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+}
+@media (max-width: 767px) {
+  body { font-size: 18px; line-height: 25.2px; }
+  .top-header { display: block; }
+  .top-header--left { display: block; }
+  .th-social { display: none; }
+  .alert-container { padding: 14px 20px; font-size: 15px; line-height: 21px; min-height: 70px; }
+  .donate-block .button { width: 100%; height: 50px; }
+  .bottom-header { padding: 20px 30px; border-top: 1px solid var(--rule); }
+  .nav-logo img { width: 277px; }
+  .logo-text b { font-size: 25px; } .logo-text i { font-size: 10px; }
+  .mobile-menu-toggle { width: 38.1px; }
+  .masthead-container { padding: 20px 0; text-align: center; }
+  .masthead-container .wrap { padding: 0 20px; }
+  .nav--breadcrumbs ul { max-width: none; flex-direction: column; justify-content: center; }
+  .nav--breadcrumbs li:nth-child(n+3) { display: none; }
+  .nav--breadcrumbs li + li::before { display: none; }
+  .nav--breadcrumbs .home svg { width: 22px; height: 20px; }
+  .page-title { font-size: 33px; line-height: 42.9px; margin: 0 0 15px; max-width: none; }
+  .wave { margin: 20px auto 0; height: 25.2px; }
+  main .wrap { padding: 30px 20px 40px; }
+  .primary-container h1 { font-size: 33px; line-height: 42.9px; margin: 0 0 15px; }
+  .primary-container p { font-size: 18px; line-height: 27px; }
+  .primary-container h2 { font-size: 26px; line-height: 33.8px; margin: 35px 0 15px; }
+  .primary-container ul, .primary-container > ul { margin-left: 60px; }
+  .row--bottom .bwrap { display: block; }
+  .policy-links { display: block; padding: 5px 10px; }
+  .policy-link { display: inline-block; }
+  .mnav > li > a { font-size: 22px; }
+}
+@media (max-width: 479px) {
+  .primary-container ul, .primary-container > ul { margin-left: 28px; }
+  .primary-container ul ul { margin-left: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .mobile-container, .mobile-overlay, a { transition: none; } }
+</style>
+
+</head>
+<body>
+<a class="skip-to-main" href="#main-content">Skip to main content</a>
+
+<header id="header" class="header">
+  <div class="top-header">
+    <div class="top-header--left">
+      <div class="th-social">
+        <a href="https://www.facebook.com/pages/Baltimore-Yearly-Meeting-QuakeBook/60755146143" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.1 288l14.2-92.7h-88.9v-60.1c0-25.4 12.4-50.1 52.2-50.1H297V6.3S260.4 0 225.4 0c-73.2 0-121.1 44.4-121.1 124.7v70.6H22.9V288h81.4v224h100.2V288z"/></svg>
+        </a>
+      </div>
+      <div class="alert-container"><p><a href="https://www.bym-rsf.org/future.html">Framework for the Future: Studying BYM Structures</a></p></div>
+    </div>
+    <div class="donate-block">
+      <a href="https://www.bym-rsf.org/giving/" target="_blank" rel="noopener noreferrer" class="button">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+        Donate to BYM
+      </a>
+    </div>
+  </div>
+  <div class="bottom-header">
+    <div class="nav-logo" id="navLogo">
+      <a href="https://www.bym-rsf.org/">
+        <img id="logoImg" src="https://cdn.firespring.com/images/753de970-f80f-4e59-8038-a799e1085004.png" width="400" height="55" alt="Baltimore Yearly Meeting">
+        <span class="logo-text" aria-hidden="true"><b>Baltimore Yearly Meeting</b><i>of the Religious Society of Friends</i></span>
+      </a>
+    </div>
+    <button type="button" class="mobile-menu-toggle" id="menuOpen" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 38.1 24" aria-hidden="true"><path class="st0" d="M14.7 12.4l-1.6-1.2-.8-.6-.8-.6c.2-.3.4-.6.5-.9.2-.3.3-.6.4-1 .2-.6.2-1.2.2-1.8C12.6 2.8 9.8 0 6.3 0S0 2.9 0 6.4s2.9 6.3 6.4 6.3c.6 0 1.2-.1 1.8-.3.3-.1.7-.2 1-.4.3-.1.6-.3.8-.5l.6.8.6.8 1.2 1.6c.1.1.2.2.4.2.1 0 .2 0 .3-.2l1.6-1.6c.1-.1.1-.1.1-.2v-.3s0-.1-.1-.2zM6.3 9.7C4.5 9.7 3 8.2 3 6.3 3 4.5 4.5 3 6.3 3c1.8 0 3.3 1.5 3.3 3.3.1 1.9-1.4 3.4-3.3 3.4z"/><path class="st1" d="M38.1.5v3c0 .3-.2.5-.5.5H15.7c-.2 0-.4-.1-.5-.3-.4-1.1-.9-2-1.6-2.8-.3-.4-.1-.9.3-.9h23.6c.4 0 .6.2.6.5zM37.6 24h-33c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h33c.3 0 .5.2.5.5v3c0 .3-.2.5-.5.5zM38.1 10.5v3c0 .3-.2.5-.5.5H18c-.2 0-.3-.2-.2-.4.4-.8.2-1.9-.7-2.8-.3-.3-.1-.9.3-.9h20.2c.3.1.5.3.5.6z"/></svg>
+      <span class="sr-only">MENU</span>
+    </button>
+  </div>
+</header>
+
+<div class="masthead-container">
+  <div class="wrap">
+    <nav class="nav--breadcrumbs" aria-label="Breadcrumb">
+      <ul>
+        <li><a class="home" href="https://www.bym-rsf.org/" aria-label="Home"><svg viewBox="0 0 576 512" aria-hidden="true"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1-1.4.1-2.8.1-4.2.1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9.1-2.8V287.6H32c-18 0-32-14-32-32.1 0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg></a></li>
+        <li><a href="https://www.bym-rsf.org/what_we_do/">What We Do</a></li>
+        <li><a href="https://www.bym-rsf.org/what_we_do/committees-resources/">Committees</a></li>
+        <li><a href="https://www.bym-rsf.org/what_we_do/committees-resources/faith-practice/">Ministry, Faith &amp; Practice</a></li>
+        <li><a href="https://www.bym-rsf.org/what_we_do/committees-resources/faith-practice/aando/">Advancement and Outreach Committee</a></li>
+      </ul>
+    </nav>
+    <h1 class="page-title">Outreach for Local Meetings</h1>
+    <div class="wave" aria-hidden="true"><svg viewBox="0 0 102 7" preserveAspectRatio="none"><path d="M0 3.5 Q6.4 0.6 12.75 3.5 T25.5 3.5 T38.25 3.5 T51 3.5 T63.75 3.5 T76.5 3.5 T89.25 3.5 T102 3.5" fill="none" stroke="#155a15" stroke-width="2.8"/></svg></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+<div id="main-content" class="primary-container">
+<h1><center>Outreach Resources for Local Meetings</center></h1>
+<p>You are not alone in your Advancement and Outreach efforts. The Advancement and Outreach Committee of Baltimore Yearly Meeting is here to help! On this page you will find some ideas and printed materials being used by other meetings. Where possible we have included editable versions of some of the printed material that can be downloaded and adapted for your purposes.</p>
+
+<p>In addition to these samples, we made a special arrangement with Britain Yearly Meeting to make their Advancement and Outreach Handbook – 54 pages of ideas and how-tos available on this web site.</p>
+
+<p>We are always looking for more examples, if you have an example you would like to share, e-mail it to: <a href="mailto:aando@bym-rsf.org?subject=Local%20Meeting%20Outreach">aando@bym-rsf.org</a>. If you have specific A&amp;O needs, please e-mail us a request and we will do our best to get you some help or resources.</p>
+
+<h2>General Outreach</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcprograms/invitational-outreach/" target="_blank" rel="noopener">Invitational Outreach</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/" target="_blank" rel="noopener" class="chg txt" data-row="19" title="Was: http://www.fgcquaker.org/resources/quaker-meetings-toolbox-outreach-and-publicity">Outreach Resources</a><span class="rowtag" aria-label="link map row 19">#19</span> – Friends General Conference</li>
+  <li><a href="https://www.nyym.org/content/quaker-resources-advancement-outreach" target="_blank" rel="noopener">Advancement &amp; Outreach</a> – New York Yearly Meeting</li>
+  <li><a href="https://neym.org/strengthen-your-local-meeting/reach-out-and-welcome" target="_blank" rel="noopener">Outreach and Welcome</a> – New England Yearly Meeting</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/outreach-workshop/" target="_blank" rel="noopener">Plan an Outreach Workshop or Mini-Conference</a> – Friends General Conference</li>
+  <li><a href="https://www.pym.org/resources/wp-content/uploads/sites/106/2023/11/Welcome-Self-Assessment-Plan-for-Meetings-Ponter.pdf" target="_blank" rel="noopener">Meeting Self-Assessment Plan</a> – Joshua Poynter, Philadelphia Yearly Meeting</li>
+  <li>Growing Our Meetings: <a href="https://www.pym.org/resources/resources-shared-at-outreach-thread-gathering/" target="_blank" rel="noopener">Resources Shared at Outreach Thread Gathering</a> – Philadelphia Yearly Meeting</li>
+  <li><a href="https://www.bym-rsf.org/file_download/0e3f9b18-a7f7-45d2-b3f9-aa93a484d015" target="_blank" rel="noopener" class="chg txt" data-row="12" title="Was: http://bym-rsforg.presencehost.net/file_download/0e3f9b18-a7f7-45d2-b3f9-aa93a484d015">Advancement and Outreach Handbook of Britain Yearly Meeting</a><span class="rowtag" aria-label="link map row 12">#12</span>. Has some great examples of real Friends doing real outreach activities, most of which can be easily adapted for a variety of settings.</li>
+  <li><a href="https://quakeroutreach.com" target="_blank" rel="noopener">Quaker Communications &amp; Outreach</a> – a cross-yearly-meeting collaboration, including a lot of research done by BYM A&amp;O. Also has a <a href="https://www.facebook.com/groups/QuakerComms" target="_blank" rel="noopener">Facebook group</a>.</li>
+  <li><a href="https://www.bym-rsf.org/file_download/1c7a77e7-1dd4-4761-a773-a19974da350b" target="_blank" rel="noopener">Recommended reading list</a></li>
+  <li>College students: <a href="https://www.fgcquaker.org/fgcresources/outreach/to-college-students-2/" target="_blank" rel="noopener">Outreach to College Students</a> – Friends General Conference</li>
+  <li>Elevator speeches: <a href="https://www.fgcquaker.org/fgcresources/outreach/speaking-about-the-quaker-way/" target="_blank" rel="noopener">Speaking About the Quaker Way</a> – Friends General Conference</li>
+</ul>
+
+<h2>Sharing the Quaker Way for Seekers</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/sharing-the-quaker-way-with-seekers/" target="_blank" rel="noopener">Sharing the Quaker Way with Seekers</a> – Friends General Conference</li>
+  <li>Quaker videos on YouTube: <a href="https://quakerspeak.com/" target="_blank" rel="noopener">QuakerSpeak</a></li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/the-quaker-minute/" target="_blank" rel="noopener">The Quaker Minute</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/new-quaker-hub/" target="_blank" rel="noopener">New Quaker Hub</a> – Friends General Conference, for the Quaker-curious</li>
+</ul>
+
+<h2>Inclusion</h2>
+<ul>
+  <li><a href="https://worship.calvin.edu/resources/articles/ten-ways-be-more-inclusive-and-welcoming-worship-and-church-life" target="_blank" rel="noopener">Ten Ways to be More Inclusive and Welcoming in Worship and Church Life</a> – Calvin Institute of Christian Worship</li>
+</ul>
+
+<h2>Inreach and Advancement within Meeting</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/inreach/" target="_blank" rel="noopener">Inreach</a> – Friends General Conference</li>
+</ul>
+
+<h2>Welcoming Visitors and Newcomers</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/identifying-and-welcoming-newcomers/" target="_blank" rel="noopener">Identifying and Welcoming Newcomers</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/through-a-visitors-eyes/" target="_blank" rel="noopener">Through a Visitor's Eyes</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/becoming-a-welcoming-friend/" target="_blank" rel="noopener">Becoming a Welcoming Friend</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/exercises/transforming-quaker-welcoming/" target="_blank" rel="noopener">Transforming Quaker Welcoming</a> – Friends General Conference</li>
+  <li><a href="https://friendsgc.wpenginepowered.com/wp-content/uploads/2022/01/You-Are-Welcome-Here_0.pdf" target="_blank" rel="noopener">You Are Welcome Here</a> (PDF booklet) – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/new-quaker-attenders/" target="_blank" rel="noopener">New Attender Experiences</a> – Friends General Conference</li>
+  <li><a href="https://www.pym.org/resources/wp-content/uploads/sites/106/2023/11/Follow-Up-with-Newcomers-Sheeks.pdf" target="_blank" rel="noopener">Follow Up with Newcomers</a> – Brad Sheeks, Philadelphia Yearly Meeting</li>
+</ul>
+
+<h2>Welcoming Families</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/welcoming-families/" target="_blank" rel="noopener">Welcoming Families &amp; Children</a> – Friends General Conference</li>
+  <li><a href="https://www.pym.org/resources/wp-content/uploads/sites/106/2023/11/Welcoming-Families-with-Children-and-Youth-Jones.pdf" target="_blank" rel="noopener">Welcoming Families with Children and Youth</a> – Sallie Jones, PYM Outreach and Communication Thread Gathering Panel, October 21, 2023</li>
+  <li><a href="https://www.pym.org/resources/families-at-the-threshold/" target="_blank" rel="noopener">Families at the Threshold</a> – Philadelphia Yearly Meeting</li>
+</ul>
+
+<h2>Web and Social Media</h2>
+<ul>
+  <li><a href="https://www.fgcquaker.org/fgcresources/communications/" target="_blank" rel="noopener">Communications</a> – Friends General Conference</li>
+  <li><a href="https://www.fgcquaker.org/fgcresources/outreach/newcomer-friendly-websites/" target="_blank" rel="noopener">Newcomer-Friendly Websites</a> – Friends General Conference</li>
+  <li><a href="https://www.pym.org/resources/wp-content/uploads/sites/106/2023/10/Digital-Presence-Ilona-Miller-2020.pdf" target="_blank" rel="noopener">Digital Presence</a> – Ilona Miller, Philadelphia Yearly Meeting</li>
+</ul>
+
+<h2>Promotional Materials – Examples from Other Meetings</h2>
+<ul>
+  <li><a href="https://patapscofriends.com/newcomer/" target="_blank" rel="noopener" class="chg txt" data-row="23" title="Was: http://patapsco.bym-rsf.net/newcomer/">Newcomer packet</a><span class="rowtag" aria-label="link map row 23">#23</span> – Patapsco Friends Meeting</li>
+  <li><a href="https://www.bym-rsf.org/file_download/919abfa3-7340-4546-98a0-4923dbc33432" target="_blank" rel="noopener" class="chg txt" data-row="26" title="Was: https://bym-rsforg.presencehost.net/file_download/919abfa3-7340-4546-98a0-4923dbc33432">New Family brochure</a><span class="rowtag" aria-label="link map row 26">#26</span> – Langley Hill Friends Meeting (3-fold) – for first-time attenders, intro to Quakerism, RE &amp; BYM teen programs. <a href="https://www.bym-rsf.org/file_download/5ba90c7e-1655-442f-bbf5-2a182bfc65ee" target="_blank" rel="noopener" class="chg txt" data-row="27" title="Was: https://bym-rsforg.presencehost.net/file_download/5ba90c7e-1655-442f-bbf5-2a182bfc65ee">Editable version</a><span class="rowtag" aria-label="link map row 27">#27</span>.</li>
+  <li>Banner: <a href="https://www.bym-rsf.org/file_download/f3723c55-edf5-4a0d-b4be-a11bdf591972" target="_blank" rel="noopener" class="chg txt" data-row="39" title="Was: https://bym-rsforg.presencehost.net/file_download/f3723c55-edf5-4a0d-b4be-a11bdf591972"><em>Quakers – More than Oatmeal</em></a><span class="rowtag" aria-label="link map row 39">#39</span> – Langley Hill Friends Meeting</li>
+  <li><a href="https://www.bym-rsf.org/file_download/5698491d-a4d6-46d8-8b8b-4dcb6347b4a1" target="_blank" rel="noopener" class="chg txt" data-row="40" title="Was: https://bym-rsforg.presencehost.net/file_download/5698491d-a4d6-46d8-8b8b-4dcb6347b4a1">Calling Cards</a><span class="rowtag" aria-label="link map row 40">#40</span> – Frederick Friends Meeting</li>
+  <li><a href="https://www.bym-rsf.org/file_download/76228c36-e40a-4453-9e57-2e01df308eda" target="_blank" rel="noopener" class="chg txt" data-row="41" title="Was: https://bym-rsforg.presencehost.net/file_download/76228c36-e40a-4453-9e57-2e01df308eda">Calling Cards</a><span class="rowtag" aria-label="link map row 41">#41</span> – Langley Hill Friends Meeting</li>
+  <li>Mini brochures (1/3 sheet, adapted from FGC mini brochures) – Langley Hill Friends Meeting:
+    <ul>
+      <li><a href="https://www.bym-rsf.org/file_download/f66315de-8dfc-460b-bdb3-94325e2503e6" target="_blank" rel="noopener" class="chg txt" data-row="29" title="Was: https://bym-rsforg.presencehost.net/file_download/f66315de-8dfc-460b-bdb3-94325e2503e6">Quakers and Prayers</a><span class="rowtag" aria-label="link map row 29">#29</span>. <a href="https://www.bym-rsf.org/file_download/0f0ca149-6d6f-4c2c-a1e6-59bf14c394c0" target="_blank" rel="noopener" class="chg txt" data-row="30" title="Was: https://bym-rsforg.presencehost.net/file_download/0f0ca149-6d6f-4c2c-a1e6-59bf14c394c0">Editable version</a><span class="rowtag" aria-label="link map row 30">#30</span>.</li>
+      <li><a href="https://www.bym-rsf.org/file_download/f6cddc9c-9584-4559-a177-924060019621" target="_blank" rel="noopener" class="chg" data-row="31" title="Was: https://bym-rsforg.presencehost.net/file_download/f6cddc9c-9584-4559-a177-924060019621">Quaker Testimonies</a><span class="rowtag" aria-label="link map row 31">#31</span>. <a href="https://www.bym-rsf.org/file_download/a2cd88e0-a5df-4259-952d-fba8c2d7df42" target="_blank" rel="noopener" class="chg txt" data-row="32" title="Was: https://bym-rsforg.presencehost.net/file_download/a2cd88e0-a5df-4259-952d-fba8c2d7df42">Editable version</a><span class="rowtag" aria-label="link map row 32">#32</span>.</li>
+      <li><a href="https://www.bym-rsf.org/file_download/9c733b06-fa0d-4a36-aad0-0af751293acc" target="_blank" rel="noopener" class="chg txt" data-row="33" title="Was: https://bym-rsforg.presencehost.net/file_download/9c733b06-fa0d-4a36-aad0-0af751293acc">You Are Welcome Here</a><span class="rowtag" aria-label="link map row 33">#33</span>. <a href="https://www.bym-rsf.org/file_download/918a817e-a3d7-4985-92f3-b8c489f00af2" target="_blank" rel="noopener" class="chg txt" data-row="34" title="Was: https://bym-rsforg.presencehost.net/file_download/918a817e-a3d7-4985-92f3-b8c489f00af2">Editable version</a><span class="rowtag" aria-label="link map row 34">#34</span>.</li>
+      <li><a href="https://www.bym-rsf.org/file_download/316d6ae9-aebc-456f-aaf9-8944f50b0227" target="_blank" rel="noopener" class="chg" data-row="35" title="Was: https://bym-rsforg.presencehost.net/file_download/316d6ae9-aebc-456f-aaf9-8944f50b0227">Quaker Beliefs</a><span class="rowtag" aria-label="link map row 35">#35</span>. <a href="https://www.bym-rsf.org/file_download/7f126242-d925-48ff-8f92-290a03385be4" target="_blank" rel="noopener" class="chg txt" data-row="36" title="Was: https://bym-rsforg.presencehost.net/file_download/7f126242-d925-48ff-8f92-290a03385be4">Editable version</a><span class="rowtag" aria-label="link map row 36">#36</span>.</li>
+      <li><a href="https://www.bym-rsf.org/file_download/a6d43130-fa14-435a-8c59-b892a3e645c1" target="_blank" rel="noopener" class="chg txt" data-row="37" title="Was: https://bym-rsforg.presencehost.net/file_download/a6d43130-fa14-435a-8c59-b892a3e645c1">How Quaker Meetings Work</a><span class="rowtag" aria-label="link map row 37">#37</span>. <a href="https://www.bym-rsf.org/file_download/abd5d5d6-2f91-4aba-9e79-e1e24ce2f03e" target="_blank" rel="noopener" class="chg txt" data-row="38" title="Was: https://bym-rsforg.presencehost.net/file_download/abd5d5d6-2f91-4aba-9e79-e1e24ce2f03e">Editable version</a><span class="rowtag" aria-label="link map row 38">#38</span>.</li>
+    </ul>
+  </li>
+</ul>
+</div>
+  </div>
+</main>
+
+<footer>
+  <div class="row--top">
+    <div class="fwrap">
+      <div class="f-social">
+        <a href="https://www.facebook.com/pages/Baltimore-Yearly-Meeting-QuakeBook/60755146143" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.1 288l14.2-92.7h-88.9v-60.1c0-25.4 12.4-50.1 52.2-50.1H297V6.3S260.4 0 225.4 0c-73.2 0-121.1 44.4-121.1 124.7v70.6H22.9V288h81.4v224h100.2V288z"/></svg>
+        </a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://www.bym-rsf.org/giving/" target="_blank" rel="noopener noreferrer">Please Support BYM</a></li>
+        <li><a href="https://www.bym-rsf.org/newslettersignup.html">Subscribe to our Mailings</a></li>
+        <li><a href="https://www.bym-rsf.org/contact-bym.html" target="_blank" rel="noopener noreferrer">Contact Us</a></li>
+      </ul>
+      <div class="f-phone"><b>Phone</b><a href="tel:3017747663">301-774-7663</a></div>
+    </div>
+  </div>
+  <div class="row--middle">
+    <div class="location">
+      <h5>Baltimore Yearly Meeting Office</h5>
+      <div>17100 Quaker Lane</div>
+      <div>Sandy Spring, MD 20860</div>
+      <div class="location__phone">
+        <div><span class="label">Phone</span><a href="tel:3017747663">301-774-7663</a></div>
+        <div><span class="label">Fax</span><a href="tel:3017747087">301-774-7087</a></div>
+      </div>
+      <div><a href="https://www.bym-rsf.org/contact-bym.html">E-mail</a></div>
+    </div>
+  </div>
+  <div class="row--bottom">
+    <div class="bwrap">
+      <div class="copy">&copy; 2026 Baltimore Yearly Meeting</div>
+      <div class="policy-links">
+        <div class="policy-link"><a href="https://www.bym-rsf.org/" title="Opens as a pop-up on the live site">Privacy Policy</a></div>
+        <div class="policy-link"><a href="https://www.bym-rsf.org/" title="Opens as a pop-up on the live site">Terms &amp; Conditions</a></div>
+      </div>
+      <div class="powered">Crafted by <a href="https://www.firespring.com/services/nonprofit-website-builder/" target="_blank" rel="noopener noreferrer">Firespring</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-overlay" id="menuOverlay"></div>
+<section class="mobile-container" id="mobileMenu" aria-hidden="true" aria-label="Site menu">
+  <div class="mobile-menu-wrap"><ul class="mnav" id="mnav"></ul></div>
+  <div class="mobile-footer">
+    <label class="sr-only" for="menuSearch">Search our site</label>
+    <input type="search" id="menuSearch" placeholder="Search" title="Search is not active in this review copy">
+    <button type="button" class="close" id="menuClose" aria-label="Close menu"><svg viewBox="0 0 384 512" aria-hidden="true"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  </div>
+</section>
+
+<div class="review-bar" id="reviewBar" role="region" aria-label="Review notes">
+  <span class="msg"><strong>Review copy, proposed v13 (03 Oct 2026).</strong> Resource list reorganized into eight categories, shown in the live site&#x27;s layout. Not the live page; header, menu and footer links go to bym-rsf.org.</span>
+  <label><input type="checkbox" id="showChanges"> Highlight changed links</label>
+  <a href="https://www.bym-rsf.org/what_we_do/committees-resources/faith-practice/aando/outreach.html" target="_blank" rel="noopener">Compare with live page</a>
+  <button type="button" id="hideBar">Hide this bar</button>
+</div>
+
+<script>
+(function () {
+  var B = 'https://www.bym-rsf.org';
+  // Site menu as captured from the live page on 2 Oct 2026: [label, path, children]
+  var NAV = [
+    ["Annual Session 2026","/annualsession.html"],
+    ["Who We Are","/who_we_are/",[
+      ["Baltimore Yearly Meeting","/who_we_are/"],
+      ["Vision Statement","/who_we_are/vision.html"],
+      ["History of Baltimore Yearly Meeting","/who_we_are/history.html"],
+      ["Yearly Meeting Officers and Staff","/who_we_are/staff.html"],
+      ["Meetings","/who_we_are/meetings/",[
+        ["Visiting Among Baltimore Yearly Meeting Friends","/who_we_are/meetings/visiting-among-baltimore-yearly-meeting-friends/",[
+          ["Visiting Among Baltimore Yearly Meeting Friends (2022 booklet)","/who_we_are/meetings/visiting-among-baltimore-yearly-meeting-friends/"]]],
+        ["District of Columbia Meetings","/who_we_are/meetings/dc_meetings/",[
+          ["Friends Meeting of Washington","/who_we_are/meetings/dc_meetings/washington.html"]]],
+        ["Maryland Meetings","/who_we_are/meetings/md_meetings/",[
+          ["Adelphi Friends Meeting","/who_we_are/meetings/md_meetings/adelphi/"],
+          ["Annapolis Friends Meeting","/who_we_are/meetings/md_meetings/annapolis/"],
+          ["Baltimore Monthly Meeting, Stony Run","/who_we_are/meetings/md_meetings/stonyrun/"],
+          ["Bethesda Friends Meeting","/who_we_are/meetings/md_meetings/bethesda/"],
+          ["Deer Creek Meeting","/who_we_are/meetings/md_meetings/deercreek/"],
+          ["Frederick Friends Meeting","/who_we_are/meetings/md_meetings/frederick/",[
+            ["Frederick Interchange Reports","/who_we_are/meetings/md_meetings/frederick/frederickinch.html"],
+            ["Frederick Spiritual State Reports","/who_we_are/meetings/md_meetings/frederick/frederickssmr.html"]]],
+          ["Gunpowder Friends Meeting","/who_we_are/meetings/md_meetings/gunpowder/",[
+            ["Gunpowder Interchange Reports","/who_we_are/meetings/md_meetings/gunpowder/gunpowderinch.html"],
+            ["Gunpowder Spiritual State Reports","/who_we_are/meetings/md_meetings/gunpowder/gunpowderssmr.html"]]],
+          ["Homewood Friends Meeting","/who_we_are/meetings/md_meetings/homewood/"],
+          ["Little Falls Friends Meeting","/who_we_are/meetings/md_meetings/littlefalls/",[
+            ["Little Falls Interchange Reports","/who_we_are/meetings/md_meetings/littlefalls/littlefallsinch.html"],
+            ["Little Falls Spiritual State Reports","/who_we_are/meetings/md_meetings/littlefalls/littlefallsssrm.html"]]],
+          ["Patapsco Friends Meeting","/who_we_are/meetings/md_meetings/patapsco/"],
+          ["Patuxent Friends Meeting","/who_we_are/meetings/md_meetings/patuxent/"],
+          ["Pipe Creek Friends Meeting","/who_we_are/meetings/md_meetings/pipecreek/"],
+          ["Sandy Spring Friends Meeting","/who_we_are/meetings/md_meetings/sandyspring/"],
+          ["Takoma Park Preparative Meeting","/who_we_are/meetings/md_meetings/takomapark/"]]],
+        ["Pennsylvania Meetings","/who_we_are/meetings/pa_meetings/",[
+          ["Carlisle Quaker Meeting","/who_we_are/meetings/pa_meetings/carlisle/"],
+          ["Dunnings Creek Friends Meeting","/who_we_are/meetings/pa_meetings/dunningscreek/"],
+          ["Eastland Preparative Meeting","/who_we_are/meetings/pa_meetings/eastland/"],
+          ["Gettysburg Monthly Meeting","/who_we_are/meetings/pa_meetings/gettysburg/"],
+          ["Little Britain Monthly Meeting","/who_we_are/meetings/pa_meetings/littlebritain/"],
+          ["Menallen Monthly Meeting","/who_we_are/meetings/pa_meetings/menallen/"],
+          ["Nottingham Monthly Meeting","/who_we_are/meetings/pa_meetings/nottingham/"],
+          ["Penn Hill Preparative Meeting","/who_we_are/meetings/pa_meetings/pennhill/"],
+          ["State College Friends Meeting","/who_we_are/meetings/pa_meetings/statecollege/"],
+          ["Warrington Monthly Meeting","/who_we_are/meetings/pa_meetings/warrington/"],
+          ["York Friends Meeting","/who_we_are/meetings/pa_meetings/york/"]]],
+        ["Virginia Meetings","/who_we_are/meetings/va_meetings/",[
+          ["Alexandria Friends Meeting","/who_we_are/meetings/va_meetings/alexandria/"],
+          ["Augusta Worship Group","/who_we_are/meetings/va_meetings/augusta/"],
+          ["Blacksburg Friends Meeting","/who_we_are/meetings/va_meetings/blacksburg/"],
+          ["Charlottesville Friends Meeting","/who_we_are/meetings/va_meetings/charlottesville/"],
+          ["Fauquier Friends Worship Group","/who_we_are/meetings/va_meetings/fauquier/"],
+          ["Floyd Friends Meeting","/who_we_are/meetings/va_meetings/floyd/"],
+          ["Front Royal Friends Meeting","/who_we_are/meetings/va_meetings/frontroyal/"],
+          ["Goose Creek Friends Meeting","/who_we_are/meetings/va_meetings/goosecreek/"],
+          ["Herndon Friends Meeting","/who_we_are/meetings/va_meetings/herndon/"],
+          ["Hopewell Centre Monthly Meeting","/who_we_are/meetings/va_meetings/hopewellcentre/"],
+          ["Langley Hill Friends Meeting","/who_we_are/meetings/va_meetings/langleyhill/"],
+          ["Lynchburg Indulged Meeting","/who_we_are/meetings/va_meetings/lynchburg/"],
+          ["Mattaponi Friends Meeting","/who_we_are/meetings/va_meetings/mattaponi/"],
+          ["Maury River Friends Meeting","/who_we_are/meetings/va_meetings/mauryriver/"],
+          ["Midlothian Friends Meeting","/who_we_are/meetings/va_meetings/midlothian/"],
+          ["Richmond Friends Meeting","/who_we_are/meetings/va_meetings/richmond/"],
+          ["Roanoke Friends Meeting","/who_we_are/meetings/va_meetings/roanoke/"],
+          ["Valley Friends Meeting","/who_we_are/meetings/va_meetings/valley/"],
+          ["Williamsburg Friends Meeting","/who_we_are/meetings/va_meetings/williamsburg/"]]],
+        ["West Virginia Meetings","/who_we_are/meetings/wva_meetings/",[
+          ["Buckhannon Friends Meeting","/who_we_are/meetings/wva_meetings/buckhannon/"],
+          ["Monongalia Friends Meeting","/who_we_are/meetings/wva_meetings/monongalia/"],
+          ["Shepherdstown Friends Meeting","/who_we_are/meetings/wva_meetings/shepherdstown/",[
+            ["Shepherdstown Interchange Reports","/who_we_are/meetings/wva_meetings/shepherdstown/shepherdstowninch.html"],
+            ["Shepherdstown Spiritual State Reports","/who_we_are/meetings/wva_meetings/shepherdstown/shepherdstownssmr.html"]]]]],
+        ["Quarterly Meetings","/who_we_are/meetings/quarters/",[
+          ["Chesapeake Quarterly Meeting","/who_we_are/meetings/quarters/chesapeakeqtr.html"],
+          ["Centre Quarterly Meeting","/who_we_are/meetings/quarters/centreqtr.html"],
+          ["Nottingham Quarterly Meeting","/who_we_are/meetings/quarters/nottinghamqtr.html"],
+          ["Warrington Quarterly Meeting","/who_we_are/meetings/quarters/warringtonqtr.html"]]]]],
+      ["Spiritual State of the Meetings","/who_we_are/ssmr/",[
+        ["Spiritual State of the Yearly Meeting","/who_we_are/ssmr/"]]],
+      ["Employment Opportunities","/who_we_are/employment-opportunities.html"],
+      ["Embraced Ministries of Baltimore Yearly Meeting","/who_we_are/embraced-ministries.html"]]],
+    ["What We Do","/what_we_do/",[
+      ["Programs & Services","/what_we_do/programs-services/",[
+        ["Resources and Services for Quaker Meetings","/what_we_do/programs-services/"],
+        ["Spiritual Formation","/what_we_do/programs-services/spiritform.html"],
+        ["Grants & Scholarships","/what_we_do/programs-services/grants-scholarships/"],
+        ["Youth Programs","/what_we_do/programs-services/yutes/"],
+        ["Women's Retreat","/what_we_do/programs-services/home.html"],
+        ["BYM Camps","/what_we_do/programs-services/camping.html"],
+        ["Friends Supporting Friends","/what_we_do/programs-services/friends-supporting-friends.html"]]],
+      ["Initiatives & Campaigns","/what_we_do/initiatives-campaigns/",[
+        ["Global Majority Friends Caucus","/what_we_do/initiatives-campaigns/"],
+        ["Worship in Silence, Love Out Loud","/what_we_do/initiatives-campaigns/worship-in-silence-love-out-loud.html"],
+        ["Becoming an Anti-Racist Faith Community","/what_we_do/initiatives-campaigns/becoming-an-anti-racist-faith-community.html"]]],
+      ["Committees","/what_we_do/committees-resources/",[
+        ["Governance & Administration","/what_we_do/committees-resources/governance-administration/",[
+          ["Trustees","/what_we_do/committees-resources/governance-administration/trustees/"],
+          ["Stewardship and Finance Committee","/what_we_do/committees-resources/governance-administration/sandf/",[
+            ["Apportionment Questionnaire","/what_we_do/committees-resources/governance-administration/sandf/apportion.html"]]],
+          ["Supervisory Committee","/what_we_do/committees-resources/governance-administration/supervisory/"],
+          ["Nominating Committee","/what_we_do/committees-resources/governance-administration/nominating/"],
+          ["Search Committee","/what_we_do/committees-resources/governance-administration/search/"],
+          ["Camping Program Committee","/what_we_do/committees-resources/governance-administration/campprogram/"],
+          ["Camp Property Management Committee","/what_we_do/committees-resources/governance-administration/campproperty/"],
+          ["Development Committee","/what_we_do/committees-resources/governance-administration/development/"],
+          ["Manual of Procedure Committee","/what_we_do/committees-resources/governance-administration/mop/"],
+          ["Annual Session Program Planning Committee","/what_we_do/committees-resources/governance-administration/program/"]]],
+        ["Ministry, Faith & Practice","/what_we_do/committees-resources/faith-practice/",[
+          ["Faith and Practice Committee","/what_we_do/committees-resources/faith-practice/fandp/"],
+          ["Ministry and Pastoral Care Committee","/what_we_do/committees-resources/faith-practice/ministry/"],
+          ["Religious Education Committee","/what_we_do/committees-resources/faith-practice/re/"],
+          ["End of Life Working Group","/what_we_do/committees-resources/faith-practice/endoflife/"],
+          ["Advancement and Outreach Committee","/what_we_do/committees-resources/faith-practice/aando/",[
+            ["Outreach for Local Meetings","/what_we_do/committees-resources/faith-practice/aando/outreach.html"]]]]],
+        ["Witness & Social Action","/what_we_do/committees-resources/witness-social-action/",[
+          ["Peace and Social Concerns Committee","/what_we_do/committees-resources/witness-social-action/peace/"],
+          ["Indigenous Affairs Committee","/what_we_do/committees-resources/witness-social-action/indigenous/",[
+            ["Minute in Support of a Truth and Healing Commission for Native Peoples","/what_we_do/committees-resources/witness-social-action/indigenous/minute-in-support-of-a-truth-and-healing-commission-for-native-peoples.html"]]],
+          ["Unity with Nature Committee","/what_we_do/committees-resources/witness-social-action/nature/"],
+          ["Reparations Action Working Group","/what_we_do/committees-resources/witness-social-action/reparations/"],
+          ["Working Group on Right Relationship with Animals","/what_we_do/committees-resources/witness-social-action/animals/"],
+          ["Working Group on Right Relationship with Animals","/what_we_do/committees-resources/witness-social-action/working-group-on-right-relationship-with-animals/"]]]]],
+      ["Yearly Meeting Business","/what_we_do/yearly-meeting-business/",[
+        ["Yearly Meeting Business","/what_we_do/yearly-meeting-business/"]]]]],
+    ["Publications","/publications/",[
+      ["Publications Overview","/publications/"],
+      ["Faith and Practice","/publications/fandp/"],
+      ["Interchange","/publications/interchange/"],
+      ["Manual of Procedure","/publications/mop/"],
+      ["Yearbooks","/publications/yearbooks/"],
+      ["Style Manual of Baltimore Yearly Meeting","/publications/stylemanual.html"],
+      ["Policies of the Yearly Meeting","/publications/policy.html"],
+      ["Speakers and Presentations","/publications/speakers.html"]]],
+    ["Donate","/giving/",[
+      ["Ways to Give to BYM","/giving/waystogive.html"],
+      ["Donate Now","/giving/donate-now.html"],
+      ["Special Campaign for Opequon Quaker Camp","/giving/opequon-special-campaign.html"],
+      ["Giving to BYM Camps","/giving/giving-to-bym-camps.html"],
+      ["Donor FAQ","/giving/donorfaq.html"]]],
+    ["Events","/events/"],
+    ["Framework for the Future","/future.html"]
+  ];
+  // The current page's branch is open in the live menu.
+  var HERE = ["What We Do","Committees","Ministry, Faith & Practice","Advancement and Outreach Committee","Outreach for Local Meetings"];
+
+  function build(items, depth, onPath) {
+    var frag = document.createDocumentFragment();
+    items.forEach(function (it) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = B + it[1]; a.textContent = it[0]; a.tabIndex = -1;
+      li.appendChild(a);
+      var here = onPath && HERE[depth] === it[0];
+      if (here) li.className = 'here';
+      if (it[2]) {
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'acc'; btn.tabIndex = -1;
+        btn.setAttribute('aria-label', 'Show ' + it[0] + ' pages');
+        btn.setAttribute('aria-expanded', here ? 'true' : 'false');
+        li.appendChild(btn);
+        var ul = document.createElement('ul');
+        ul.appendChild(build(it[2], depth + 1, here));
+        li.appendChild(ul);
+        if (here) li.classList.add('open');
+      }
+      frag.appendChild(li);
+    });
+    return frag;
+  }
+  var mnav = document.getElementById('mnav');
+  mnav.appendChild(build(NAV, 0, true));
+  mnav.addEventListener('click', function (e) {
+    var b = e.target.closest('.acc'); if (!b) return;
+    var li = b.parentNode, open = li.classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var body = document.body, panel = document.getElementById('mobileMenu'),
+      openBtn = document.getElementById('menuOpen'), closeBtn = document.getElementById('menuClose');
+  function setMenu(on) {
+    body.classList.toggle('mobile-menu-visible', on);
+    panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+    openBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    panel.querySelectorAll('a, button, input').forEach(function (el) { el.tabIndex = on ? 0 : -1; });
+    if (on) { var f = panel.querySelector('a'); if (f) f.focus(); } else { openBtn.focus(); }
+  }
+  openBtn.addEventListener('click', function () { setMenu(true); });
+  closeBtn.addEventListener('click', function () { setMenu(false); });
+  document.getElementById('menuOverlay').addEventListener('click', function () { setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && body.classList.contains('mobile-menu-visible')) setMenu(false); });
+  panel.querySelectorAll('a, button, input').forEach(function (el) { el.tabIndex = -1; });
+  document.getElementById('menuSearch').addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
+
+  // Logo: the live image loads when the file is opened in a browser; the hosted
+  // review page cannot load outside images, so it falls back to a lettered logo.
+  var logo = document.getElementById('logoImg'), wrap = document.getElementById('navLogo');
+  function noImg() { wrap.classList.add('no-img'); }
+  logo.addEventListener('error', noImg);
+  if (logo.complete && logo.naturalWidth === 0) noImg();
+
+  // Review bar
+  var bar = document.getElementById('reviewBar');
+  body.classList.add('review-bar-on');
+  document.getElementById('hideBar').addEventListener('click', function () { bar.hidden = true; body.classList.remove('review-bar-on'); });
+  var hl = document.getElementById('showChanges');
+  hl.addEventListener('change', function () { body.classList.toggle('show-changes', hl.checked); });
+})();
+</script>
+</body>
+</html>
