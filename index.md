@@ -1,5 +1,6 @@
 ---
 title: Outreach Resources for Local Meetings
+layout: default
 ---
 
 # Outreach Resources for Local Meetings
