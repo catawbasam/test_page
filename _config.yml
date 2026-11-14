@@ -1,0 +1,15 @@
+# Edit the four values below.
+title: Your Group Name Here
+description: A student Quaker worship group. Silence, simplicity, and welcome.
+
+# Banner image: upload the file to assets/images/ in the repo, then match the name here.
+banner_image: /assets/images/banner.jpg
+# Alt text is read aloud by screen readers. Describe the actual photo.
+banner_alt: A group of smiling people of many backgrounds and ages gathered together
+
+# Use the custom layout on every page.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
