@@ -1,7 +1,7 @@
 ---
 title: Outreach Resources for Local Meetings
 ---
-![test image](assets/images/banner.png)
+
 # Outreach Resources for Local Meetings
 
 You are not alone in your Advancement and Outreach efforts. The Advancement and Outreach Committee of Baltimore Yearly Meeting is here to help! On this page you will find some ideas and printed materials being used by other meetings. Where possible we have included editable versions of some of the printed material that can be downloaded and adapted for your purposes.
